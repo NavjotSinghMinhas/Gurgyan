@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gurgyan | Apps for Sikh culture, music and Gurbani</title>
+<meta name="description" content="Gurgyan is a small family of apps built with seva: Lehras, Bani, Gurudwara and Play. Learn, listen, find and play.">
+<meta name="theme-color" content="#0C1738">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ੴ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Figtree:wght@400;500;600&family=Noto+Serif+Gurmukhi:wght@500;700&family=Noto+Sans+Gurmukhi:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --nila: #0C1738;        /* deep Nihang blue, the page ground */
+    --nila-2: #12214D;      /* raised surfaces */
+    --nila-3: #1B2F6B;      /* borders and hover */
+    --kesari: #F28C1B;      /* saffron */
+    --sona: #E8B84A;        /* gold of Harmandir Sahib */
+    --ambar: #7DC3EE;       /* sky blue */
+    --hara: #86CDA8;        /* soft green */
+    --chola: #F5F2EA;       /* chola white, text */
+    --dhund: #A9B4D6;       /* muted text */
+
+    --display: 'Fraunces', 'Noto Serif Gurmukhi', Georgia, serif;
+    --gurmukhi: 'Noto Serif Gurmukhi', 'Fraunces', serif;
+    --body: 'Figtree', 'Noto Sans Gurmukhi', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--nila);
+    color: var(--chola);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Phulkari-inspired lattice, very quiet */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23E8B84A' stroke-width='1.2'%3E%3Cpath d='M36 6 66 36 36 66 6 36z'/%3E%3Cpath d='M36 22 50 36 36 50 22 36z'/%3E%3Ccircle cx='36' cy='36' r='2.5' fill='%23F28C1B' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--sona); outline-offset: 4px; border-radius: 6px; }
+
+  .wrap { width: min(1120px, 92vw); margin-inline: auto; position: relative; z-index: 1; }
+
+  /* ---------- Top bar ---------- */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 600; font-size: 1.25rem; }
+  .brand .mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: linear-gradient(145deg, var(--kesari), var(--sona));
+    color: var(--nila); font-family: var(--gurmukhi); font-weight: 700; font-size: 1.25rem;
+  }
+  .top nav a { color: var(--dhund); font-size: .95rem; padding: 8px 12px; border-radius: 999px; transition: color .2s, background .2s; }
+  .top nav a:hover { color: var(--chola); background: var(--nila-2); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: clamp(48px, 9vw, 110px) 0 clamp(56px, 8vw, 96px);
+  }
+  .onkar {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -52%);
+    font-family: var(--gurmukhi);
+    font-weight: 700;
+    font-size: clamp(280px, 52vw, 560px);
+    line-height: 1;
+    color: transparent;
+    background: radial-gradient(circle at 50% 40%, rgba(242,140,27,.34), rgba(232,184,74,.07) 62%, transparent 75%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-stroke: 1.5px rgba(232,184,74,.28);
+    pointer-events: none; user-select: none;
+    animation: rise 1.6s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translate(-50%, -44%) scale(.94); }
+    to   { opacity: 1; transform: translate(-50%, -52%) scale(1); }
+  }
+  .hero > *:not(.onkar) { position: relative; z-index: 1; }
+
+  .greet {
+    font-family: var(--gurmukhi);
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+    color: var(--sona);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 8.5vw, 6.2rem);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    max-width: 14ch;
+    margin: 0 auto 22px;
+  }
+  .lede {
+    max-width: 52ch; margin: 0 auto 34px;
+    color: var(--dhund);
+    font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+  }
+  .lede b { color: var(--chola); font-weight: 600; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--kesari); color: #1A1204;
+    font-weight: 600; font-size: 1.02rem;
+    padding: 14px 26px; border-radius: 999px;
+    transition: transform .2s, background .2s;
+  }
+  .btn:hover { background: var(--sona); transform: translateY(-2px); }
+
+  /* ---------- Section heading ---------- */
+  .apps-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 24px 0 28px; flex-wrap: wrap; }
+  .apps-head h2 { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -.01em; }
+  .apps-head p { color: var(--dhund); max-width: 40ch; }
+
+  /* ---------- App cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    --c: var(--kesari);
+    position: relative;
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 280px;
+    padding: 30px 30px 26px;
+    background: linear-gradient(160deg, var(--nila-2), #0F1B42);
+    border: 1px solid var(--nila-3);
+    border-radius: 26px;
+    overflow: hidden;
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .3s;
+  }
+  /* a tinted arch rising from the card corner, a nod to the gurudwara doorway */
+  .card::before {
+    content: "";
+    position: absolute; right: -50px; top: -60px;
+    width: 220px; height: 280px;
+    border-radius: 110px 110px 0 0;
+    background: var(--c);
+    opacity: .12;
+    transition: opacity .3s, transform .4s;
+  }
+  .card:hover { transform: translateY(-6px); border-color: var(--c); box-shadow: 0 22px 50px -24px var(--c); }
+  .card:hover::before { opacity: .22; transform: translateY(8px); }
+
+  .card .icon {
+    width: 56px; height: 56px; border-radius: 18px;
+    display: grid; place-items: center;
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    color: var(--c);
+    position: relative; z-index: 1;
+  }
+  .card .icon svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .names { position: relative; z-index: 1; }
+  .names .gm { font-family: var(--gurmukhi); color: var(--c); font-size: 1.15rem; font-weight: 500; }
+  .names h3 { font-family: var(--display); font-size: 2rem; line-height: 1.1; font-weight: 600; }
+
+  .card p.desc { color: var(--dhund); max-width: 40ch; position: relative; z-index: 1; }
+
+  .foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: relative; z-index: 1; }
+  .host { font-size: .9rem; color: var(--dhund); }
+  .open {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; color: var(--nila); background: var(--c);
+    padding: 10px 18px; border-radius: 999px;
+    transition: gap .2s;
+  }
+  .card:hover .open { gap: 14px; }
+
+  /* Whole card clickable */
+  .card a.stretch { position: absolute; inset: 0; z-index: 2; border-radius: inherit; }
+
+  /* Coming soon */
+  .card.soon { border-style: dashed; }
+  .card.soon .icon, .card.soon .names h3 { opacity: .85; }
+  .card.soon:hover { transform: none; box-shadow: none; border-color: var(--nila-3); }
+  .card.soon:hover::before { opacity: .12; transform: none; }
+  .pill {
+    position: absolute; top: 24px; right: 24px; z-index: 3;
+    font-size: .82rem; font-weight: 600;
+    padding: 6px 14px; border-radius: 999px;
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    color: var(--c);
+    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+  }
+  .card.soon .open { background: transparent; color: var(--dhund); padding-left: 0; font-weight: 500; }
+
+  /* More to come */
+  .more {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap;
+    text-align: center;
+    padding: 28px;
+    border: 1px dashed var(--nila-3);
+    border-radius: 26px;
+    color: var(--dhund);
+  }
+  .more .gm { font-family: var(--gurmukhi); color: var(--sona); font-size: 1.3rem; }
+
+  /* ---------- Values strip ---------- */
+  .values { margin: clamp(64px, 9vw, 110px) 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+  @media (max-width: 760px) { .values { grid-template-columns: 1fr; gap: 24px; } }
+  .values div { border-top: 2px solid var(--kesari); padding-top: 16px; }
+  .values div:nth-child(2) { border-color: var(--sona); }
+  .values div:nth-child(3) { border-color: var(--ambar); }
+  .values h4 { font-family: var(--display); font-size: 1.35rem; margin-bottom: 6px; }
+  .values p { color: var(--dhund); }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--nila-3); padding: 38px 0 48px; text-align: center; position: relative; z-index: 1; }
+  footer .fateh { font-family: var(--gurmukhi); font-size: clamp(1.2rem, 3vw, 1.7rem); color: var(--sona); margin-bottom: 6px; }
+  footer p { color: var(--dhund); font-size: .92rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .onkar { animation: none; }
+    .card, .card::before, .btn, .open { transition: none; }
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="/" aria-label="Gurgyan home">
+      <span class="mark" aria-hidden="true">ੴ</span>
+      Gurgyan
+    </a>
+    <nav><a href="#apps">Our apps</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="onkar" aria-hidden="true">ੴ</div>
+      <p class="greet" lang="pa">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ</p>
+      <h1>Sat Sri Akaal, welcome to Gurgyan.</h1>
+      <p class="lede"><b>Gur</b> is the teacher, <b>gyan</b> is wisdom. We build small, friendly apps that bring the wisdom, music and spirit of Sikhi closer to your everyday life, with more being added all the time.</p>
+      <a class="btn" href="#apps">Explore the apps <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section id="apps" aria-labelledby="apps-title">
+      <div class="apps-head">
+        <h2 id="apps-title">Pick an app, start your journey</h2>
+        <p>Each one is free to open in your browser. No sign-up needed.</p>
+      </div>
+
+      <!-- Cards are generated from the APPS list at the bottom of this file -->
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="values" aria-label="What we care about">
+      <div>
+        <h4>Made with seva</h4>
+        <p>Offered as selfless service to the sangat, with no ads and nothing asked in return.</p>
+      </div>
+      <div>
+        <h4>Simple for everyone</h4>
+        <p>From a child's first paath to a seasoned musician, every app is easy to pick up and use.</p>
+      </div>
+      <div>
+        <h4>Rooted in tradition</h4>
+        <p>Respectful of maryada, with care taken over language, sources and sacred text.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="fateh" lang="pa">ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖ਼ਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫ਼ਤਹਿ</div>
+  <p>© <span id="yr"></span> Gurgyan · gurgyan.com</p>
+</footer>
+
+<script>
+  /* ==========================================================
+     ADD A NEW APP: copy one block below, change the values.
+       status: 'live' makes the card a link, 'soon' shows a Coming soon badge.
+       color : any of the CSS colour variables or a hex value.
+       icon  : one of the keys in ICONS, or paste your own SVG path(s).
+     ========================================================== */
+  const APPS = [
+    {
+      name: 'Bani', gurmukhi: 'ਬਾਣੀ', host: 'bani.gurgyan.com', status: 'live',
+      color: 'var(--sona)', icon: 'book',
+      desc: 'Read Gurbani with meanings, or follow live kirtan as the shabad scrolls along on its own. No one needs to operate the screen.'
+    },
+    {
+      name: 'Lehras', gurmukhi: 'ਲਹਿਰਾ', host: 'lehras.gurgyan.com', status: 'live',
+      color: 'var(--kesari)', icon: 'wave',
+      desc: 'Practice with lehras across many instruments, from tabla and harmonium to dilruba and more. Pick a taal, set the tempo and play along.'
+    },
+    {
+      name: 'Gurudwara', gurmukhi: 'ਗੁਰਦੁਆਰਾ', host: 'gurudwara.gurgyan.com', status: 'soon',
+      color: 'var(--ambar)', icon: 'dome',
+      desc: 'Find gurudwaras near you, with diwan timings, langar hours and directions, wherever you travel.'
+    },
+    {
+      name: 'Play', gurmukhi: 'ਕੀਰਤਨ', host: 'play.gurgyan.com', status: 'soon',
+      color: 'var(--hara)', icon: 'headphones',
+      desc: 'Listen to kirtan anytime. Stream shabads from your favourite ragis and keep Gurbani playing through your day.'
+    }
+  ];
+
+  const ICONS = {
+    wave: '<path d="M2 12c2.2-7 4.4-7 6.6 0s4.4 7 6.6 0 4.4-7 6.8 0"/><path d="M2 18c2.2-4 4.4-4 6.6 0s4.4 4 6.6 0 4.4-4 6.8 0" opacity=".55"/>',
+    book: '<path d="M12 6.5v13.5"/><path d="M12 6.5C10 4.8 6 4.3 3 5.4v13.7c3-1.1 7-.6 9 1 2-1.6 6-2.1 9-1V5.4c-3-1.1-7-.6-9 1.1z"/>',
+    dome: '<path d="M3 20h18"/><path d="M6 20v-5a6 6 0 0 1 12 0v5"/><path d="M12 3v3"/><path d="M10 20v-3.5a2 2 0 0 1 4 0V20"/>',
+    headphones: '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>'
+  };
+
+  const grid = document.getElementById('grid');
+
+  APPS.forEach(app => {
+    const live = app.status === 'live';
+    const card = document.createElement('article');
+    card.className = 'card' + (live ? '' : ' soon');
+    card.style.setProperty('--c', app.color);
+
+    card.innerHTML = `
+      ${live ? '' : '<span class="pill">Coming soon</span>'}
+      <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[app.icon] || app.icon}</svg></div>
+      <div class="names">
+        <div class="gm" lang="pa">${app.gurmukhi}</div>
+        <h3>${app.name}</h3>
+      </div>
+      <p class="desc">${app.desc}</p>
+      <div class="foot">
+        <span class="host">${app.host}</span>
+        <span class="open">${live ? `Open ${app.name} <span aria-hidden="true">→</span>` : 'Opening soon'}</span>
+      </div>
+      ${live ? `<a class="stretch" href="https://${app.host}" aria-label="Open ${app.name} at ${app.host}"></a>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+
+  const more = document.createElement('div');
+  more.className = 'more';
+  more.innerHTML = '<span class="gm" lang="pa">ਹੋਰ ਜਲਦੀ ਆ ਰਹੇ ਹਨ</span><span>More apps are on the way. Check back soon.</span>';
+  grid.appendChild(more);
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
